@@ -68,14 +68,14 @@ let state = {
   tasks: [],
   filter: "Semua",
   category: "Semua Kategori",
-  nav: "Dashboard", // Default awal kerangka
+  nav: "Dashboard",
   editingId: null,
   detailId: null,
   menuOpenId: null,
   calDate: new Date(2026, 6, 1),
   userName: "Khalifah",
   notifOn: true,
-  showNotif: false, // Menyimpan status dropdown terbuka/tidak
+  showNotif: false,
   accent: "indigo",
   toastTimer: null
 };
@@ -107,7 +107,7 @@ function initLoadData() {
       state.filter = parsed.filter ?? "Semua";
       state.category = parsed.category ?? "Semua Kategori";
       
-      // PERBAIKAN: Selalu paksa halaman awal ke Dashboard saat baru dibuka
+      // Kunci awal selalu mendarat di Dashboard ketika pertama kali load
       state.nav = "Dashboard"; 
       
       state.userName = parsed.userName ?? "Khalifah";
@@ -266,8 +266,8 @@ function injectHeaderRight() {
           ` : ''}
         </button>
         
-        <!-- Dropdown Notifikasi -->
-        <div id="notif-dropdown" class="${state.showNotif ? '' : 'hidden'} absolute right-0 top-12 w-72 sm:w-80 ${t.cardBg} border ${t.cardBorder} rounded-2xl shadow-lg z-50 fade-in overflow-hidden">
+        <!-- PERBAIKAN DROPDOWN MOBILE: Lebar pas di tengah layar HP, merapat kanan di desktop -->
+        <div id="notif-dropdown" class="${state.showNotif ? '' : 'hidden'} absolute -right-12 md:right-0 top-12 w-[calc(100vw-2rem)] sm:w-80 ${t.cardBg} border ${t.cardBorder} rounded-2xl shadow-lg z-50 fade-in overflow-hidden">
           <div class="px-4 py-3 border-b ${t.cardBorder} flex items-center justify-between">
             <p class="font-bold text-sm">Notifikasi Hari Ini</p>
             <button id="btn-close-dropdown" class="${t.subtext}">${getIconSvg("x", 16)}</button>
@@ -528,6 +528,7 @@ function renderPengaturan() {
         ${injectHeaderRight()}
       </div>
       
+      <!-- Grid System Diperlebar Penuh -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
         <div class="space-y-6">
           <div class="${t.cardBg} border ${t.cardBorder} rounded-2xl p-6 shadow-sm card-hover">
@@ -657,7 +658,7 @@ function attachDynamicListeners() {
   const bell = document.getElementById("btn-bell-notif");
   const notifDropdown = document.getElementById("notif-dropdown");
   
-  // PERBAIKAN: Kontrol dropdown notifikasi langsung secara instan via DOM (Bebas Kedip)
+  // Kontrol dropdown via manipulasi class DOM langsung (Bebas Kedip / Tanpa Re-render)
   if(bell && notifDropdown) {
     bell.onclick = (e) => { 
       e.stopPropagation(); 
@@ -734,7 +735,6 @@ document.getElementById("form-task").onsubmit = (e) => {
 };
 
 window.onclick = () => {
-  // Sembunyikan dropdown secara halus saat klik di luar area
   const notifDropdown = document.getElementById("notif-dropdown");
   if(state.showNotif && notifDropdown) { 
     state.showNotif = false; 
