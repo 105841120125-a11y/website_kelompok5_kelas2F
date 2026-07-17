@@ -1,21 +1,126 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>To-Do List</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List Dashboard</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Link ke CSS eksternal -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-<div id="root"></div>
+<!-- Tambah overflow-x-hidden langsung di body untuk jaga-jaga -->
+<body class="min-h-screen w-full transition-colors duration-300 overflow-x-hidden">
+  
+  <div class="flex w-full min-h-screen relative">
+    
+    <!-- SIDEBAR (Desktop Only) -->
+    <aside id="sidebar" class="text-white w-72 shrink-0 flex-col p-6 hidden md:flex transition-colors duration-300 border-r border-white/5">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center structure-icon" data-icon="clipboard"></div>
+        <span class="text-lg font-bold tracking-tight">To-Do List</span>
+      </div>
+      <nav id="nav-container" class="flex flex-col gap-1">
+        <!-- Diisi dinamis oleh JS -->
+      </nav>
+      <div class="mt-auto pt-10">
+        <div class="rounded-2xl bg-white/5 p-5 flex flex-col items-center text-center">
+          <div class="w-20 h-20 rounded-full bg-indigo-400/20 flex items-center justify-center mb-3 structure-icon" data-icon="check-circle" data-size="34"></div>
+          <p class="text-sm text-indigo-100/80 italic leading-relaxed">"Selesaikan hari ini, untuk masa depan yang lebih baik."</p>
+          <div id="sidebar-accent-line" class="w-8 h-0.5 mt-3 rounded-full"></div>
+        </div>
+      </div>
+    </aside>
 
-<script src="icons.js" type="text/babel" data-presets="react"></script>
-<script src="data.js" type="text/babel" data-presets="react"></script>
-<script src="storage.js" type="text/babel" data-presets="react"></script>
-<script src="app.js" type="text/babel" data-presets="react"></script>
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 w-full p-5 md:p-10 pb-24 md:pb-10 overflow-x-hidden">
+      <!-- Konten dinamis dirender di sini berdasarkan View Aktif -->
+      <div id="view-root" class="w-full"></div>
+    </main>
+  </div>
+
+  <!-- MODAL: TAMBAH / EDIT TUGAS -->
+  <div id="modal-task" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-40 fade-in">
+    <div id="modal-task-card" class="w-full max-w-md rounded-2xl p-6 border max-h-[90vh] overflow-y-auto scale-in shadow-2xl">
+      <div class="flex items-center gap-3 mb-5">
+        <button id="btn-back-modal" class="subtext-color structure-icon" data-icon="chevron-left"></button>
+        <h3 id="modal-task-title" class="text-lg font-bold">Tambah Tugas</h3>
+        <button id="btn-close-modal" class="ml-auto subtext-color structure-icon" data-icon="x"></button>
+      </div>
+      <form id="form-task" class="space-y-4">
+        <div>
+          <label class="text-xs font-semibold mb-1.5 block subtext-color">Judul Tugas</label>
+          <input type="text" id="form-title" required placeholder="Contoh: Belajar JavaScript" class="w-full rounded-xl px-3.5 py-2.5 text-sm border outline-none focus:ring-2" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold mb-1.5 block subtext-color">Kategori</label>
+          <select id="form-category" required class="w-full rounded-xl px-3.5 py-2.5 text-sm border outline-none bg-transparent"></select>
+        </div>
+        <div>
+          <label class="text-xs font-semibold mb-1.5 block subtext-color">Tanggal</label>
+          <input type="date" id="form-date" required class="w-full rounded-xl px-3.5 py-2.5 text-sm border outline-none" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold mb-1.5 block subtext-color">Prioritas</label>
+          <div class="flex gap-4 text-sm" id="form-priority-group">
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="priority" value="rendah" /> Rendah</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="priority" value="sedang" checked /> Sedang</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="priority" value="tinggi" /> Tinggi</label>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold mb-1.5 block subtext-color">Catatan (opsional)</label>
+          <textarea id="form-note" placeholder="Tulis catatan..." rows="3" class="w-full rounded-xl px-3.5 py-2.5 text-sm border outline-none resize-none"></textarea>
+        </div>
+        <button type="submit" id="btn-submit-task" class="w-full text-white font-semibold py-3 rounded-xl transition"></button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DETAIL TUGAS -->
+  <div id="modal-detail" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-40 fade-in">
+    <div id="modal-detail-card" class="w-full max-w-md rounded-2xl p-6 border scale-in shadow-2xl">
+      <div class="flex items-center gap-3 mb-5">
+        <button id="btn-back-detail" class="subtext-color structure-icon" data-icon="chevron-left"></button>
+        <h3 class="text-lg font-bold">Detail Tugas</h3>
+        <button id="btn-close-detail" class="ml-auto subtext-color structure-icon" data-icon="x"></button>
+      </div>
+      <div class="flex flex-col items-center text-center mb-5">
+        <div id="detail-badge-icon-box" class="w-16 h-16 rounded-full flex items-center justify-center mb-3 structure-icon" data-icon="grad" data-size="26"></div>
+        <h4 id="detail-title" class="font-bold text-lg"></h4>
+        <span id="detail-category-badge" class="mt-2 text-xs font-semibold px-3 py-1 rounded-full"></span>
+      </div>
+      <div class="space-y-4 mb-6">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 subtext-color structure-icon" data-icon="calendar" data-size="18"></span>
+          <div><p class="text-xs subtext-color">Tanggal</p><p id="detail-date" class="text-sm font-medium"></p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 subtext-color structure-icon" data-icon="flag" data-size="18"></span>
+          <div><p class="text-xs subtext-color">Prioritas</p><p id="detail-priority" class="text-sm font-medium"></p></div>
+        </div>
+        <div id="detail-note-container" class="flex items-start gap-3">
+          <span class="mt-0.5 subtext-color structure-icon" data-icon="file-text" data-size="18"></span>
+          <div><p class="text-xs subtext-color">Catatan</p><p id="detail-note" class="text-sm font-medium"></p></div>
+        </div>
+      </div>
+      <div class="flex gap-3 mb-4">
+        <button id="btn-edit-detail" class="flex-1 flex items-center justify-center gap-2 text-white text-sm font-semibold py-2.5 rounded-xl transition"></button>
+        <button id="btn-delete-detail" class="flex-1 flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold py-2.5 rounded-xl transition structure-icon" data-icon="trash" data-size="15" data-append="true"> Hapus</button>
+      </div>
+      <button id="btn-toggle-done-detail" class="w-full flex items-center justify-center gap-2 text-emerald-500 font-semibold text-sm py-2"></button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="hidden fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg z-50 pop-in"></div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <div id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 border-t flex justify-around py-2.5 z-30 transition-colors duration-300 shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+    <!-- Diisi dinamis oleh JS -->
+  </div>
+
+  <!-- Link ke Javascript eksternal -->
+  <script src="script.js"></script>
 </body>
 </html>
