@@ -107,7 +107,6 @@ function initLoadData() {
       state.filter = parsed.filter ?? "Semua";
       state.category = parsed.category ?? "Semua Kategori";
       
-      // Kunci awal selalu mendarat di Dashboard ketika pertama kali load
       state.nav = "Dashboard"; 
       
       state.userName = parsed.userName ?? "Khalifah";
@@ -133,7 +132,7 @@ function getThemeStyles() {
     pillBg: "bg-slate-800 text-slate-300", divider: "divide-slate-800",
   } : {
     appBg: "bg-slate-50", sidebarBg: "bg-[#1e1b3a]", cardBg: "bg-white",
-    cardBorder: "border-slate-100", text: "text-slate-800", subtext: "text-slate-500",
+    cardBorder: "border-slate-200", text: "text-slate-800", subtext: "text-slate-500",
     rowHover: "hover:bg-slate-50", inputBg: "bg-white border-slate-200 text-slate-700 placeholder-slate-400",
     pillBg: "bg-slate-100 text-slate-600", divider: "divide-slate-100",
   };
@@ -258,7 +257,7 @@ function injectHeaderRight() {
 
   return `
     <div class="flex items-center gap-3 relative">
-      <div class="relative">
+      <div>
         <button id="btn-bell-notif" aria-label="Notifikasi" class="w-10 h-10 rounded-full flex items-center justify-center border ${t.cardBorder} ${t.cardBg} hover:opacity-80 relative">
           ${getIconSvg("bell", 17, state.notifOn ? A.text : t.subtext)}
           ${state.notifOn && todayTasks.length > 0 ? `
@@ -266,8 +265,8 @@ function injectHeaderRight() {
           ` : ''}
         </button>
         
-        <!-- PERBAIKAN DROPDOWN MOBILE: Lebar pas di tengah layar HP, merapat kanan di desktop -->
-        <div id="notif-dropdown" class="${state.showNotif ? '' : 'hidden'} absolute -right-12 md:right-0 top-12 w-[calc(100vw-2rem)] sm:w-80 ${t.cardBg} border ${t.cardBorder} rounded-2xl shadow-lg z-50 fade-in overflow-hidden">
+        <!-- PERBAIKAN TOTAL POSISI MOBILE: Di HP menggunakan fixed left-4 right-4 top-40 agar berada di tengah layar penuh, tidak terlempar ke samping -->
+        <div id="notif-dropdown" class="${state.showNotif ? '' : 'hidden'} fixed left-4 right-4 top-40 md:absolute md:left-auto md:right-0 md:top-12 md:w-80 ${t.cardBg} border ${t.cardBorder} rounded-2xl shadow-xl z-50 fade-in overflow-hidden">
           <div class="px-4 py-3 border-b ${t.cardBorder} flex items-center justify-between">
             <p class="font-bold text-sm">Notifikasi Hari Ini</p>
             <button id="btn-close-dropdown" class="${t.subtext}">${getIconSvg("x", 16)}</button>
@@ -528,7 +527,6 @@ function renderPengaturan() {
         ${injectHeaderRight()}
       </div>
       
-      <!-- Grid System Diperlebar Penuh -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
         <div class="space-y-6">
           <div class="${t.cardBg} border ${t.cardBorder} rounded-2xl p-6 shadow-sm card-hover">
@@ -658,7 +656,6 @@ function attachDynamicListeners() {
   const bell = document.getElementById("btn-bell-notif");
   const notifDropdown = document.getElementById("notif-dropdown");
   
-  // Kontrol dropdown via manipulasi class DOM langsung (Bebas Kedip / Tanpa Re-render)
   if(bell && notifDropdown) {
     bell.onclick = (e) => { 
       e.stopPropagation(); 
