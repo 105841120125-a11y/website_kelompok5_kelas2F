@@ -13,14 +13,14 @@ const PRIORITY_DOT = { rendah: "bg-emerald-500", sedang: "bg-amber-500", tinggi:
 const categories = ["Pendidikan", "Organisasi", "Pribadi"];
 
 const initialTasks = [
-  { id: 1, title: "Mengerjakan laporan praktikum", category: "Pendidikan", date: "2026-07-10", done: false, priority: "tinggi", note: "Bab 1-3 harus selesai hari ini." },
-  { id: 2, title: "Belajar untuk ujian", category: "Pendidikan", date: "2026-07-08", done: true, priority: "sedang", note: "" },
-  { id: 3, title: "Mengumpulkan tugas pemrograman", category: "Pendidikan", date: "2026-07-11", done: false, priority: "tinggi", note: "" },
-  { id: 4, title: "Membuat presentasi kelompok", category: "Organisasi", date: "2026-07-07", done: true, priority: "sedang", note: "" },
-  { id: 5, title: "Belanja kebutuhan rumah", category: "Pribadi", date: "2026-07-12", done: false, priority: "rendah", note: "" },
-  { id: 6, title: "Olahraga pagi", category: "Pribadi", date: "2026-07-09", done: false, priority: "rendah", note: "" },
-  { id: 7, title: "Membaca buku 30 menit", category: "Pribadi", date: "2026-07-06", done: true, priority: "rendah", note: "" },
-  { id: 8, title: "Menyiapkan materi seminar", category: "Organisasi", date: "2026-07-15", done: false, priority: "tinggi", note: "" },
+  { id: 1, title: "Mengerjakan laporan praktikum", category: "Pendidikan", date: "2026-07-10", time: "23:59", done: false, priority: "tinggi", note: "Bab 1-3 harus selesai hari ini." },
+  { id: 2, title: "Belajar untuk ujian", category: "Pendidikan", date: "2026-07-08", time: "23:59", done: true, priority: "sedang", note: "" },
+  { id: 3, title: "Mengumpulkan tugas pemrograman", category: "Pendidikan", date: "2026-07-11", time: "23:59", done: false, priority: "tinggi", note: "" },
+  { id: 4, title: "Membuat presentasi kelompok", category: "Organisasi", date: "2026-07-07", time: "23:59", done: true, priority: "sedang", note: "" },
+  { id: 5, title: "Belanja kebutuhan rumah", category: "Pribadi", date: "2026-07-12", time: "10:00", done: false, priority: "rendah", note: "" },
+  { id: 6, title: "Olahraga pagi", category: "Pribadi", date: "2026-07-09", time: "06:00", done: false, priority: "rendah", note: "" },
+  { id: 7, title: "Membaca buku 30 menit", category: "Pribadi", date: "2026-07-06", time: "20:00", done: true, priority: "rendah", note: "" },
+  { id: 8, title: "Menyiapkan materi seminar", category: "Organisasi", date: "2026-07-15", time: "23:59", done: false, priority: "tinggi", note: "" },
 ];
 
 /* SVG Path Icons Map */
@@ -30,12 +30,11 @@ const SVG_PATHS = {
   list: '<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>',
   flag: '<path d="M5 3v18"/><path d="M5 4h11l-2 4 2 4H5"/>',
   calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
-  settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.6V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.6 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.6 1z"/>',
+  settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 000.3-1.9 1.7 1.7 0 00-1.6-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.6V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.6 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.6 1z"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   moon: '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
   user: '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
-  more: '<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>',
   x: '<path d="M18 6 6 18M6 6l12 12"/>',
   "chevron-left": '<path d="M15 18l-6-6 6-6"/>',
   "chevron-right": '<path d="M9 18l6-6-6-6"/>',
@@ -71,7 +70,6 @@ let state = {
   nav: "Dashboard",
   editingId: null,
   detailId: null,
-  menuOpenId: null,
   calDate: new Date(2026, 6, 1),
   userName: "Khalifah",
   notifOn: true,
@@ -81,10 +79,10 @@ let state = {
 };
 
 const accentMap = {
-  indigo: { btn: "bg-indigo-500 hover:bg-indigo-600", ring: "focus:ring-indigo-400", text: "text-indigo-500", chip: "bg-indigo-500" },
-  emerald: { btn: "bg-emerald-500 hover:bg-emerald-600", ring: "focus:ring-emerald-400", text: "text-emerald-500", chip: "bg-emerald-500" },
-  rose: { btn: "bg-rose-500 hover:bg-rose-600", ring: "focus:ring-rose-400", text: "text-rose-500", chip: "bg-rose-500" },
-  amber: { btn: "bg-amber-500 hover:bg-amber-600", ring: "focus:ring-amber-400", text: "text-amber-500", chip: "bg-amber-500" },
+  indigo: { btn: "bg-indigo-500 hover:bg-indigo-600", ring: "focus:ring-indigo-400", text: "text-indigo-500", chip: "bg-indigo-500", closeBtn: "bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white" },
+  emerald: { btn: "bg-emerald-500 hover:bg-emerald-600", ring: "focus:ring-emerald-400", text: "text-emerald-500", chip: "bg-emerald-500", closeBtn: "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white" },
+  rose: { btn: "bg-rose-500 hover:bg-rose-600", ring: "focus:ring-rose-400", text: "text-rose-500", chip: "bg-rose-500", closeBtn: "bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white" },
+  amber: { btn: "bg-amber-500 hover:bg-amber-600", ring: "focus:ring-amber-400", text: "text-amber-500", chip: "bg-amber-500", closeBtn: "bg-amber-500/10 text-amber-400 hover:bg-amber-500 hover:text-white" },
 };
 
 const navItems = [
@@ -106,9 +104,7 @@ function initLoadData() {
       state.dark = parsed.dark ?? false;
       state.filter = parsed.filter ?? "Semua";
       state.category = parsed.category ?? "Semua Kategori";
-      
       state.nav = "Dashboard"; 
-      
       state.userName = parsed.userName ?? "Khalifah";
       state.notifOn = parsed.notifOn ?? true;
       state.accent = parsed.accent ?? "indigo";
@@ -164,7 +160,6 @@ function toggleDone(id) {
 
 function deleteTask(id) {
   state.tasks = state.tasks.filter(x => x.id !== id);
-  state.menuOpenId = null;
   if (state.detailId === id) state.detailId = null;
   saveToLocalStorage();
   showToast("Tugas dihapus");
@@ -178,6 +173,8 @@ function openAddModal() {
   document.getElementById("form-title").value = "";
   document.getElementById("form-category").value = categories[0];
   document.getElementById("form-date").value = "";
+  const formTime = document.getElementById("form-time");
+  if(formTime) formTime.value = "23:59";
   document.querySelector('input[name="priority"][value="sedang"]').checked = true;
   document.getElementById("form-note").value = "";
   
@@ -186,11 +183,12 @@ function openAddModal() {
 
 function openEditModal(task) {
   state.editingId = task.id;
-  state.menuOpenId = null;
   document.getElementById("modal-task-title").innerText = "Edit Tugas";
   document.getElementById("form-title").value = task.title;
   document.getElementById("form-category").value = task.category;
   document.getElementById("form-date").value = task.date;
+  const formTime = document.getElementById("form-time");
+  if(formTime) formTime.value = task.time || "23:59";
   document.querySelector(`input[name="priority"][value="${task.priority}"]`).checked = true;
   document.getElementById("form-note").value = task.note;
   
@@ -219,7 +217,7 @@ function openDetailModal(id) {
   catBadge.innerText = task.category;
   catBadge.className = `mt-2 text-xs font-semibold px-3 py-1 rounded-full ${styleBadge}`;
   
-  document.getElementById("detail-date").innerText = formatDate(task.date);
+  document.getElementById("detail-date").innerText = `${formatDate(task.date)} pukul ${task.time || '23:59'}`;
   
   const prioEl = document.getElementById("detail-priority");
   prioEl.innerText = PRIORITY_LABEL[task.priority];
@@ -265,7 +263,6 @@ function injectHeaderRight() {
           ` : ''}
         </button>
         
-        <!-- PERBAIKAN TOTAL POSISI MOBILE: Di HP menggunakan fixed left-4 right-4 top-40 agar berada di tengah layar penuh, tidak terlempar ke samping -->
         <div id="notif-dropdown" class="${state.showNotif ? '' : 'hidden'} fixed left-4 right-4 top-40 md:absolute md:left-auto md:right-0 md:top-12 md:w-80 ${t.cardBg} border ${t.cardBorder} rounded-2xl shadow-xl z-50 fade-in overflow-hidden">
           <div class="px-4 py-3 border-b ${t.cardBorder} flex items-center justify-between">
             <p class="font-bold text-sm">Notifikasi Hari Ini</p>
@@ -283,7 +280,7 @@ function injectHeaderRight() {
                 <span class="mt-1.5 w-2 h-2 rounded-full flex-shrink-0 ${PRIORITY_DOT[tk.priority]}"></span>
                 <div class="min-w-0">
                   <p class="text-sm font-medium truncate">${tk.title}</p>
-                  <p class="text-xs mt-0.5 ${t.subtext}">${tk.category} • Prioritas ${PRIORITY_LABEL[tk.priority]}</p>
+                  <p class="text-xs mt-0.5 ${t.subtext}">⏰ ${tk.time || '23:59'} • ${tk.category}</p>
                 </div>
               </button>
             `).join('')}
@@ -301,10 +298,12 @@ function injectHeaderRight() {
   `;
 }
 
+/* CARDS DAFTAR TUGAS (MEMBERSIHKAN IKON AKSI BARIS: KLIK BARIS LANGSUNG MEMBUKA DETAIL) */
 function renderTaskListCard(items, title) {
   const t = getThemeStyles();
   const A = accentMap[state.accent];
-  
+  const sortedItems = [...items].sort((a,b) => (a.time || "23:59").localeCompare(b.time || "23:59"));
+
   return `
     <div class="${t.cardBg} border ${t.cardBorder} rounded-2xl p-5 md:p-6 shadow-sm card-hover w-full">
       <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
@@ -327,30 +326,19 @@ function renderTaskListCard(items, title) {
         </select>
       </div>
       <div class="divide-y ${t.divider} w-full">
-        ${items.length === 0 ? `<p class="text-sm py-8 text-center ${t.subtext}">Tidak ada tugas di sini.</p>` : ''}
-        ${items.map(task => {
+        ${sortedItems.length === 0 ? `<p class="text-sm py-8 text-center ${t.subtext}">Tidak ada tugas di sini.</p>` : ''}
+        ${sortedItems.map(task => {
           const catStyle = (CATEGORY_STYLES[task.category] && CATEGORY_STYLES[task.category][state.dark ? "dark" : "light"]) || "";
           return `
-            <div class="task-row flex items-center gap-3 sm:gap-4 py-3.5 px-2 rounded-xl ${t.rowHover} relative w-full">
-              <button onclick="toggleDone(${task.id})" class="shrink-0">
+            <div onclick="openDetailModal(${task.id})" class="task-row flex items-center gap-3 sm:gap-4 py-3.5 px-3 rounded-xl ${t.rowHover} cursor-pointer transition w-full">
+              <button onclick="event.stopPropagation(); toggleDone(${task.id})" class="shrink-0">
                 ${task.done ? getIconSvg("check-circle", 22, "text-emerald-500") : getIconSvg("circle", 22, t.subtext)}
               </button>
-              <button onclick="openDetailModal(${task.id})" class="flex-1 text-left text-sm font-medium truncate ${task.done ? `line-through-custom ${t.subtext}` : t.text}">
-                ${task.title}
-              </button>
-              <span class="hidden sm:inline-block text-xs font-semibold px-3 py-1 rounded-full ${catStyle}">${task.category}</span>
-              <span class="hidden sm:block text-xs w-24 text-right ${t.subtext}">${formatDate(task.date)}</span>
-              <div class="relative shrink-0">
-                <button onclick="event.stopPropagation(); state.menuOpenId = (state.menuOpenId === ${task.id} ? null : ${task.id}); renderApp();" class="p-1.5 rounded-lg ${t.subtext} hover:opacity-70">
-                  ${getIconSvg("more", 18)}
-                </button>
-                ${state.menuOpenId === task.id ? `
-                  <div class="absolute right-0 mt-1 w-36 rounded-xl border ${t.cardBorder} ${t.cardBg} shadow-lg z-10 overflow-hidden pop-in">
-                    <button onclick="openEditModal(${JSON.stringify(task).replace(/"/g, '&quot;')})" class="flex items-center gap-2 w-full px-3 py-2.5 text-sm ${t.rowHover}">${getIconSvg("pencil", 14)} Edit</button>
-                    <button onclick="deleteTask(${task.id})" class="flex items-center gap-2 w-full px-3 py-2.5 text-sm text-rose-500 hover:bg-rose-500/10">${getIconSvg("trash", 14)} Hapus</button>
-                  </div>
-                ` : ''}
+              <div class="flex-1 min-w-0 text-left">
+                <p class="text-sm font-medium truncate ${task.done ? `line-through-custom ${t.subtext}` : t.text}">${task.title}</p>
               </div>
+              <span class="hidden sm:inline-block text-xs font-semibold px-3 py-1 rounded-full ${catStyle}">${task.category}</span>
+              <span class="text-xs text-right ${t.subtext} shrink-0 min-w-[90px] leading-tight">${formatDate(task.date)} <br> <b class="${state.dark ? 'text-indigo-300' : 'text-indigo-600'} font-semibold">${task.time || '23:59'}</b></span>
             </div>
           `;
         }).join('')}
@@ -438,16 +426,16 @@ function renderPrioritas() {
           ${priorityTasks.map(task => {
             const catStyle = (CATEGORY_STYLES[task.category] && CATEGORY_STYLES[task.category][state.dark ? "dark" : "light"]) || "";
             return `
-              <div class="task-row flex items-center gap-3 sm:gap-4 py-3.5 px-2 rounded-xl ${t.rowHover} w-full">
+              <div onclick="openDetailModal(${task.id})" class="task-row flex items-center gap-3 sm:gap-4 py-3.5 px-3 rounded-xl ${t.rowHover} cursor-pointer transition w-full">
                 <span class="w-2.5 h-2.5 rounded-full ${PRIORITY_DOT[task.priority]} shrink-0"></span>
-                <button onclick="toggleDone(${task.id})" class="shrink-0">
+                <button onclick="event.stopPropagation(); toggleDone(${task.id})" class="shrink-0">
                   ${task.done ? getIconSvg("check-circle", 22, "text-emerald-500") : getIconSvg("circle", 22, t.subtext)}
                 </button>
-                <button onclick="openDetailModal(${task.id})" class="flex-1 text-left text-sm font-medium truncate ${task.done ? `line-through-custom ${t.subtext}` : t.text}">
-                  ${task.title}
-                </button>
+                <div class="flex-1 min-w-0 text-left">
+                  <p class="text-sm font-medium truncate ${task.done ? `line-through-custom ${t.subtext}` : t.text}">${task.title}</p>
+                </div>
                 <span class="hidden sm:inline-block text-xs font-semibold px-3 py-1 rounded-full ${catStyle}">${task.category}</span>
-                <span class="hidden sm:block text-xs w-24 text-right ${t.subtext}">${formatDate(task.date)}</span>
+                <span class="text-xs text-right ${t.subtext} shrink-0 min-w-[90px] leading-tight">${formatDate(task.date)} <br> <b>${task.time || '23:59'}</b></span>
               </div>
             `;
           }).join('')}
@@ -496,16 +484,27 @@ function renderKalender() {
           </div>
           <div class="grid grid-cols-7 gap-1.5">
             ${cells.map((d, i) => {
-              const dayTasks = d ? tasksByDay[d] : null;
+              const dayTasks = d ? (tasksByDay[d] || []) : [];
+              const dateIsoStr = d ? `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}` : '';
+              
               return `
-                <div class="min-h-[80px] rounded-xl p-1.5 border ${t.cardBorder} ${d ? t.rowHover : ""} ${d ? "" : "opacity-0"}">
-                  ${d ? `<div class="text-xs font-semibold mb-1">${d}</div>` : ''}
-                  ${dayTasks ? dayTasks.slice(0, 2).map(tk => `
-                    <div onclick="openDetailModal(${tk.id})" class="text-[10px] truncate px-1.5 py-0.5 rounded mb-0.5 cursor-pointer ${(CATEGORY_STYLES[tk.category] && CATEGORY_STYLES[tk.category][state.dark ? "dark" : "light"]) || t.pillBg} ${tk.done ? "line-through opacity-60" : ""}">
-                      ${tk.title}
-                    </div>
-                  `).join('') : ''}
-                  ${dayTasks && dayTasks.length > 2 ? `<div class="text-[10px] ${t.subtext}">+${dayTasks.length - 2} lagi</div>` : ''}
+                <div onclick="${d ? `event.stopPropagation(); handleCalendarDayClick('${dateIsoStr}')` : ''}" 
+                     class="min-h-[85px] rounded-xl p-2 border ${t.cardBorder} ${d ? `${t.rowHover} cursor-pointer` : "opacity-0"} transition flex flex-col justify-between relative">
+                  ${d ? `<div class="text-xs font-bold">${d}</div>` : ''}
+                  
+                  <div class="flex flex-col gap-1 mt-1 flex-1 justify-end">
+                    ${dayTasks.length > 0 ? `
+                      <div class="flex flex-col gap-1">
+                        ${dayTasks.slice(0, 2).map(tk => `
+                          <div class="text-[10px] px-1.5 py-0.5 rounded flex items-center justify-between gap-1 ${(CATEGORY_STYLES[tk.category] && CATEGORY_STYLES[tk.category][state.dark ? "dark" : "light"]) || t.pillBg} ${tk.done ? "line-through opacity-50" : ""}">
+                            <span class="truncate font-medium">${tk.title}</span>
+                            <span class="shrink-0 text-[9px] opacity-80">${tk.time || '23:59'}</span>
+                          </div>
+                        `).join('')}
+                        ${dayTasks.length > 2 ? `<span class="text-[9px] font-bold ${t.subtext}">+${dayTasks.length - 2} lagi</span>` : ''}
+                      </div>
+                    ` : ''}
+                  </div>
                 </div>
               `;
             }).join('')}
@@ -514,6 +513,50 @@ function renderKalender() {
       </div>
     </div>
   `;
+}
+
+function handleCalendarDayClick(dateIsoStr) {
+  const t = getThemeStyles();
+  const A = accentMap[state.accent];
+  const filteredTasks = state.tasks
+    .filter(tk => tk.date === dateIsoStr)
+    .sort((a,b) => (a.time || "23:59").localeCompare(b.time || "23:59"));
+  
+  const d = new Date(dateIsoStr + "T00:00:00");
+  const titleFormatted = d.toLocaleDateString("id-ID", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  let htmlContent = "";
+  if(filteredTasks.length === 0) {
+    htmlContent = `<p class="text-sm py-6 text-center ${t.subtext}">Tidak ada tugas di tanggal ini.</p>`;
+  } else {
+    htmlContent = `
+      <div class="divide-y ${t.divider} max-h-60 overflow-y-auto pr-1">
+        ${filteredTasks.map(tk => `
+          <div onclick="event.stopPropagation(); document.getElementById('modal-cal-day').classList.add('hidden'); openDetailModal(${tk.id})" class="py-2.5 flex items-center justify-between cursor-pointer ${t.rowHover} rounded-xl px-2">
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-medium truncate ${tk.done ? 'line-through opacity-50' : ''}">${tk.title}</p>
+              <p class="text-xs ${t.subtext}">⏰ Jam ${tk.time || '23:59'} • ${tk.category}</p>
+            </div>
+            ${tk.done ? getIconSvg("check-circle", 18, "text-emerald-500 shrink-0") : `<span class="w-2 h-2 rounded-full ${PRIORITY_DOT[tk.priority]} shrink-0"></span>`}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  const container = document.getElementById("modal-cal-day-container");
+  if(container) {
+    container.innerHTML = `
+      <div class="${t.cardBg} ${t.text} w-full max-w-sm rounded-2xl p-5 border ${t.cardBorder} scale-in shadow-2xl relative">
+        <div class="flex items-center justify-between mb-3 border-b pb-2 ${t.cardBorder}">
+          <h4 class="font-bold text-sm truncate">${titleFormatted}</h4>
+          <button onclick="event.stopPropagation(); document.getElementById('modal-cal-day').classList.add('hidden')" class="w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold transition duration-200 active:scale-95 hover:bg-slate-500/20">×</button>
+        </div>
+        ${htmlContent}
+      </div>
+    `;
+    document.getElementById("modal-cal-day").classList.remove("hidden");
+  }
 }
 
 function renderPengaturan() {
@@ -597,21 +640,23 @@ function renderApp() {
   document.body.className = `min-h-screen w-full ${t.appBg} ${t.text} transition-colors duration-300 overflow-x-hidden`;
   
   const sidebar = document.getElementById("sidebar");
-  sidebar.className = `${t.sidebarBg} text-white w-72 shrink-0 flex-col p-6 hidden md:flex transition-colors duration-300 border-r ${state.dark ? 'border-slate-800' : 'border-slate-100'}`;
+  if(sidebar) sidebar.className = `${t.sidebarBg} text-white w-72 shrink-0 flex-col p-6 hidden md:flex transition-colors duration-300 border-r ${state.dark ? 'border-slate-800' : 'border-slate-100'}`;
   
   const sideAccentLine = document.getElementById("sidebar-accent-line");
-  sideAccentLine.className = `w-8 h-0.5 mt-3 rounded-full ${A.chip}`;
+  if(sideAccentLine) sideAccentLine.className = `w-8 h-0.5 mt-3 rounded-full ${A.chip}`;
 
   /* Render Sidebar Desktop Nav Items */
   const navContainer = document.getElementById("nav-container");
-  navContainer.innerHTML = navItems.map(item => {
-    const active = state.nav === item.label;
-    return `
-      <button onclick="state.nav='${item.label}'; state.menuOpenId=null; renderApp();" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${active ? `${A.chip} text-white shadow-lg shadow-indigo-900/30 pl-5` : "text-indigo-200/70 hover:bg-white/5 hover:text-white"}">
-        ${getIconSvg(item.icon, 18)} ${item.label}
-      </button>
-    `;
-  }).join('');
+  if(navContainer) {
+    navContainer.innerHTML = navItems.map(item => {
+      const active = state.nav === item.label;
+      return `
+        <button onclick="state.nav='${item.label}'; renderApp();" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${active ? `${A.chip} text-white shadow-lg shadow-indigo-900/30 pl-5` : "text-indigo-200/70 hover:bg-white/5 hover:text-white"}">
+          ${getIconSvg(item.icon, 18)} ${item.label}
+        </button>
+      `;
+    }).join('');
+  }
 
   /* Render Mobile Bottom Navigation */
   const mNavItems = [
@@ -621,31 +666,39 @@ function renderApp() {
     { label: "Pengaturan", icon: "settings", target: "Pengaturan" }
   ];
   const mobNav = document.getElementById("mobile-nav");
-  mobNav.className = `md:hidden fixed bottom-0 left-0 right-0 ${t.cardBg} border-t ${t.cardBorder} flex justify-around py-2.5 z-30 transition-colors duration-300 shadow-[0_-4px_12px_rgba(0,0,0,0.04)]`;
-  mobNav.innerHTML = mNavItems.map(item => {
-    const active = state.nav === item.target;
-    return `
-      <button onclick="state.nav='${item.target}'; renderApp();" class="flex flex-col items-center gap-1 text-xs ${active ? A.text : t.subtext}">
-        ${getIconSvg(item.icon, 18)} ${item.label}
-      </button>
-    `;
-  }).join('');
+  if(mobNav) {
+    mobNav.className = `md:hidden fixed bottom-0 left-0 right-0 ${t.cardBg} border-t ${t.cardBorder} flex justify-around py-2.5 z-30 transition-colors duration-300 shadow-[0_-4px_12px_rgba(0,0,0,0.04)]`;
+    mobNav.innerHTML = mNavItems.map(item => {
+      const active = state.nav === item.target;
+      return `
+        <button onclick="state.nav='${item.target}'; renderApp();" class="flex flex-col items-center gap-1 text-xs ${active ? A.text : t.subtext}">
+          ${getIconSvg(item.icon, 18)} ${item.label}
+        </button>
+      `;
+    }).join('');
+  }
 
   /* ROUTING RENDER VIEW */
   const viewRoot = document.getElementById("view-root");
-  if (state.nav === "Dashboard") viewRoot.innerHTML = renderDashboard();
-  else if (state.nav === "Tugas Saya") viewRoot.innerHTML = renderTugasSaya();
-  else if (state.nav === "Prioritas") viewRoot.innerHTML = renderPrioritas();
-  else if (state.nav === "Kalender") viewRoot.innerHTML = renderKalender();
-  else if (state.nav === "Pengaturan") viewRoot.innerHTML = renderPengaturan();
+  if(viewRoot) {
+    if (state.nav === "Dashboard") viewRoot.innerHTML = renderDashboard();
+    else if (state.nav === "Tugas Saya") viewRoot.innerHTML = renderTugasSaya();
+    else if (state.nav === "Prioritas") viewRoot.innerHTML = renderPrioritas();
+    else if (state.nav === "Kalender") viewRoot.innerHTML = renderKalender();
+    else if (state.nav === "Pengaturan") viewRoot.innerHTML = renderPengaturan();
+  }
 
   /* UPDATE MODAL TEMA TAMPILAN */
-  document.getElementById("modal-task-card").className = `${t.cardBg} ${t.text} w-full max-w-md rounded-2xl p-6 border ${t.cardBorder} max-h-[90vh] overflow-y-auto scale-in shadow-2xl`;
+  const modalTaskCard = document.getElementById("modal-task-card");
+  if(modalTaskCard) modalTaskCard.className = `${t.cardBg} ${t.text} w-full max-w-md rounded-2xl p-6 border ${t.cardBorder} max-h-[90vh] overflow-y-auto scale-in shadow-2xl`;
+  
   const taskSubmitBtn = document.getElementById("btn-submit-task");
-  taskSubmitBtn.className = `w-full ${A.btn} text-white font-semibold py-3 rounded-xl transition`;
-  taskSubmitBtn.innerText = state.editingId ? "Perbarui Tugas" : "Simpan Tugas";
+  if(taskSubmitBtn) {
+    taskSubmitBtn.className = `w-full ${A.btn} text-white font-semibold py-3 rounded-xl transition`;
+    taskSubmitBtn.innerText = state.editingId ? "Perbarui Tugas" : "Simpan Tugas";
+  }
 
-  const inputs = document.querySelectorAll('#form-task input[type="text"], #form-task select, #form-task input[type="date"], #form-task textarea, #input-username');
+  const inputs = document.querySelectorAll('#form-task input[type="text"], #form-task select, #form-task input[type="date"], #form-task input[type="time"], #form-task textarea, #input-username');
   inputs.forEach(el => { el.className = `w-full rounded-xl px-3.5 py-2.5 text-sm border ${t.inputBg} outline-none focus:ring-2 ${A.ring} bg-transparent`; });
 
   attachDynamicListeners();
@@ -703,33 +756,39 @@ function attachDynamicListeners() {
 }
 
 /* ---------- FORM & STATIC EVENT HANDLERS ---------- */
-document.getElementById("btn-close-modal").onclick = () => { document.getElementById("modal-task").classList.add("hidden"); };
-document.getElementById("btn-back-modal").onclick = () => { document.getElementById("modal-task").classList.add("hidden"); };
-document.getElementById("btn-close-detail").onclick = closeDetailModal;
-document.getElementById("btn-back-detail").onclick = closeDetailModal;
+const btnCloseModal = document.getElementById("btn-close-modal");
+if(btnCloseModal) btnCloseModal.onclick = () => { document.getElementById("modal-task").classList.add("hidden"); };
 
-document.getElementById("form-task").onsubmit = (e) => {
-  e.preventDefault();
-  const title = document.getElementById("form-title").value.trim();
-  const category = document.getElementById("form-category").value;
-  const date = document.getElementById("form-date").value;
-  const priority = document.querySelector('input[name="priority"]:checked').value;
-  const note = document.getElementById("form-note").value.trim();
+const btnCloseDetail = document.getElementById("btn-close-detail");
+if(btnCloseDetail) btnCloseDetail.onclick = closeDetailModal;
 
-  if(!title) return;
+const formTask = document.getElementById("form-task");
+if(formTask) {
+  formTask.onsubmit = (e) => {
+    e.preventDefault();
+    const title = document.getElementById("form-title").value.trim();
+    const category = document.getElementById("form-category").value;
+    const date = document.getElementById("form-date").value;
+    const timeEl = document.getElementById("form-time");
+    const time = timeEl ? timeEl.value : "23:59";
+    const priority = document.querySelector('input[name="priority"]:checked').value;
+    const note = document.getElementById("form-note").value.trim();
 
-  if (state.editingId) {
-    state.tasks = state.tasks.map(x => x.id === state.editingId ? { ...x, title, category, date, priority, note } : x);
-    showToast("Tugas diperbarui");
-  } else {
-    state.tasks.unshift({ id: Date.now(), done: false, title, category, date, priority, note });
-    showToast("Tugas ditambahkan");
-  }
+    if(!title) return;
 
-  saveToLocalStorage();
-  document.getElementById("modal-task").classList.add("hidden");
-  renderApp();
-};
+    if (state.editingId) {
+      state.tasks = state.tasks.map(x => x.id === state.editingId ? { ...x, title, category, date, time, priority, note } : x);
+      showToast("Tugas diperbarui");
+    } else {
+      state.tasks.unshift({ id: Date.now(), done: false, title, category, date, time, priority, note });
+      showToast("Tugas ditambahkan");
+    }
+
+    saveToLocalStorage();
+    document.getElementById("modal-task").classList.add("hidden");
+    renderApp();
+  };
+}
 
 window.onclick = () => {
   const notifDropdown = document.getElementById("notif-dropdown");
@@ -737,7 +796,6 @@ window.onclick = () => {
     state.showNotif = false; 
     notifDropdown.classList.add("hidden"); 
   }
-  if(state.menuOpenId !== null) { state.menuOpenId = null; renderApp(); }
 };
 
 /* ---------- INITIAL LOADING TRIGGER ---------- */
@@ -745,7 +803,9 @@ function initApp() {
   initLoadData();
   
   const formCat = document.getElementById("form-category");
-  formCat.innerHTML = `<option value="">Pilih kategori</option>` + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+  if(formCat) {
+    formCat.innerHTML = `<option value="">Pilih kategori</option>` + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
 
   document.querySelectorAll(".structure-icon").forEach(el => {
     const iconName = el.getAttribute("data-icon");
